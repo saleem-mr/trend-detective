@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Trend Detective</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230B0F1A' stroke='%234D9FFF'/%3E%3Cpath d='M6 22 L13 15 L18 19 L26 9' stroke='%2300D4AA' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css?v=4">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="21" fill="none" stroke="#1F2A3D" stroke-width="2"/>
+      <path d="M8 32 L18 22 L25 27 L40 11" fill="none" stroke="#00D4AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40" cy="11" r="3" fill="#4D9FFF"/>
+    </svg>
+    <div><h1>Trend Detective</h1><small>Earth System · NASA POWER</small></div>
+  </div>
+  <div class="spacer"></div>
+  <a class="btn" href="/">← Dashboard</a>
+</header>
+
+<main style="max-width:980px">
+  <section class="hero">
+    <span class="badge">NASA Space Apps 2026 · Be An Earth System Trend Detective!</span>
+    <h2>About the project</h2>
+    <p>Most dashboards tell you a trend exists. This one is built to tell you when it doesn't.</p>
+  </section>
+
+  <section class="card" style="margin-bottom:16px">
+    <h3>The challenge</h3>
+    <p>NASA asked for a tool that can select Earth-science variables, visualise them over a region and a long period, estimate the rate of change, and test whether that change is <em>significant</em> — noting that the same process can produce opposite trends in different places.</p>
+    <p>We took that last sentence seriously. The dashboard therefore reports a spatial field of per-cell slopes (so "where" is answered), and it refuses to call a trend when the signal is below the detection limit of the data (so "significant" is answered honestly).</p>
+  </section>
+
+  <section class="card" style="margin-bottom:16px">
+    <h3>What we measure</h3>
+    <p>Five variables from NASA POWER. MERRA-2 variables cover 1981–2023; CERES albedo starts in 2001 and CERES shortwave in 1984. Monthly means are aggregated to annual values, and the dashboard lets you switch between the full record and the 2001–2023 window.</p>
+    <table>
+      <thead><tr><th>Key</th><th>Variable</th><th>Product</th><th>Native grid</th></tr></thead>
+      <tbody>
+        <tr><td class="num">TS</td><td>Earth skin temperature</td><td>MERRA-2</td><td>0.5° × 0.625°</td></tr>
+        <tr><td class="num">PRECTOTCORR</td><td>Precipitation (corrected)</td><td>MERRA-2</td><td>0.5° × 0.625°</td></tr>
+        <tr><td class="num">GWETTOP</td><td>Surface soil wetness</td><td>MERRA-2</td><td>0.5° × 0.625°</td></tr>
+        <tr><td class="num">ALLSKY_SRF_ALB</td><td>Surface albedo</td><td>CERES SYN1deg</td><td>1° × 1°</td></tr>
+        <tr><td class="num">ALLSKY_SFC_SW_DWN</td><td>Shortwave downward</td><td>CERES SYN1deg</td><td>1° × 1°</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card" style="margin-bottom:16px">
+    <h3>How the statistics work</h3>
+    <ul style="color:#8B96A8">
+      <li><b style="color:#E6EDF7">Theil–Sen slope</b> — median of all pairwise slopes. Robust to outliers and to one bad year.</li>
+      <li><b style="color:#E6EDF7">Mann–Kendall</b> — rank-based, distribution-free. Its variance is corrected with the <b style="color:#E6EDF7">Hamed–Rao</b> effective sample size, because annual means are serially correlated.</li>
+      <li><b style="color:#E6EDF7">Block permutation null</b> — 400 reshuffles of blocks of the detrended series. This preserves autocorrelation and destroys only the trend.</li>
+      <li><b style="color:#E6EDF7">Benjamini–Hochberg FDR</b> — every claim must survive false-discovery control across the variable family and across spatial cells.</li>
+      <li><b style="color:#E6EDF7">Minimum detectable trend (MDT)</b> — 2.80 × SE(slope), reported as an advisory confidence label (strong / moderate / near-limit).</li>
+      <li><b style="color:#E6EDF7">Calibration</b> — <code>./engine/trend-detect --selftest</code> runs 600 synthetic series and prints the false-positive rate and the detection curve.</li>
+    </ul>
+  </section>
+
+  <section class="card" style="margin-bottom:16px">
+    <h3>Why a "no verdict" is a result</h3>
+    <p>With 23 annual samples, the smallest reliably detectable trend is often larger than the trend itself. Reporting a slope and a p-value anyway is how dashboards mislead. Here, the three gates must all pass; otherwise the verdict is <b>NO VERDICT</b>, and the dashboard shows the detection limit next to the estimate.</p>
+    <p>We also show how many sampled points collapse onto distinct model cells (for example, 16 points → 12 cells in Jordan, 9 points → 3 cells along a 40 km corridor). The effective resolution is part of the answer.</p>
+  </section>
+
+  <section class="card" style="margin-bottom:16px">
+    <h3>Limits we state openly</h3>
+    <ul style="color:#8B96A8">
+      <li>MERRA-2 and CERES are reanalysis/model products; correlations among them partly reflect shared physics rather than independent evidence.</li>
+      <li>Cell size (~55–111 km) is coarser than many desertification processes. A 40 km corridor can collapse into three cells.</li>
+      <li>Linear trends only. Non-linear change and regime shifts are out of scope.</li>
+      <li>Projections are linear extrapolations with widening uncertainty — not climate-model output.</li>
+      <li>NDVI requires MODIS via Earthdata login and is not included; the engine accepts any <code>date,value</code> series through its CLI.</li>
+      <li>The map uses NASA GIBS for both the Blue Marble basemap and the NDVI overlay — no map API key, no third-party tile service. The NDVI layer is a recent composite shown for context only; it is not part of the trend statistics.</li>
+    </ul>
+  </section>
+
+  <section class="card" style="margin-bottom:16px">
+    <h3>Reproduce</h3>
+    <pre style="background:#0a0f1b;border:1px solid #1F2A3D;border-radius:8px;padding:12px;overflow:auto;font-size:12px;color:#8B96A8">g++ -O3 -std=c++17 engine/trend_detect.cpp -o engine/trend-detect
+./engine/trend-detect --selftest
+./scripts/build_presets.sh
+node server.js</pre>
+    <p style="color:#8B96A8;font-size:13px">Engine: <code>trend-detect</code> v2.0 · C++17 (portable, no -march=native) · no Python, no npm dependencies in the serving path.</p>
+  </section>
+
+  <section class="card">
+    <h3>Team &amp; attribution</h3>
+    <p><b>The Orcas</b> · Local event: Irbid, Jordan · NASA Space Apps Challenge 2026.</p>
+    <p style="color:#8B96A8;font-size:13px">Data: NASA POWER (power.larc.nasa.gov) providing MERRA-2 and CERES SYN1deg. This project is not affiliated with or endorsed by NASA. Challenge text © NASA Space Apps.</p>
+  </section>
+</main>
+
+<footer>Built with NASA POWER · statistics by a portable C++ engine · NASA Space Apps Challenge 2026</footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+node_modules/
+.env
+.cache/
+cache/*
+!cache/.gitkeep
+data/live-*.json
+data/__custom.json
+bin/*
+!bin/.gitkeep
+out.json
+*.log
+.DS_Store
+
+# generated artifacts (rebuilt by scripts)
+web/deck/*.pdf
+web/deck/*.pptx
+web/deck/*.tar.gz
+web/dashboard-*.png
+web/slide-*.png

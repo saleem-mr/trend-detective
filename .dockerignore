@@ -1,0 +1,6 @@
+cache
+.env
+.git
+docs
+*.log
+node_modules

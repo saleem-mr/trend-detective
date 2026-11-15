@@ -1,0 +1,16 @@
+{
+  "name": "trend-detective",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Honest Earth-system trend detector built on NASA POWER (MERRA-2, CERES). Finds real trends; refuses fake ones.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "engine": "g++ -O3 -std=c++17 engine/trend_detect.cpp -o engine/trend-detect",
+    "selftest": "./engine/trend-detect --selftest",
+    "presets": "bash scripts/build_presets.sh",
+    "test": "bash scripts/test.sh"
+  },
+  "engines": { "node": ">=18" },
+  "license": "MIT"
+}

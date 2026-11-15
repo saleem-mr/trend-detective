@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trend Detective — Earth System Trends from NASA Data</title>
+<meta name="description" content="An honest Earth-system trend detector built on NASA POWER (MERRA-2, CERES): Theil–Sen slopes, Mann–Kendall with autocorrelation correction, permutation nulls, and a hard detection limit.">
+<meta property="og:title" content="Trend Detective">
+<meta property="og:description" content="Finds real trends. Refuses fake ones. NASA POWER + MERRA-2 + CERES.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230B0F1A' stroke='%234D9FFF'/%3E%3Cpath d='M6 22 L13 15 L18 19 L26 9' stroke='%2300D4AA' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="/styles.css?v=4">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="21" fill="none" stroke="#1F2A3D" stroke-width="2"/>
+      <circle cx="24" cy="24" r="13" fill="none" stroke="#1F2A3D" stroke-width="1.5"/>
+      <path d="M8 32 L18 22 L25 27 L40 11" fill="none" stroke="#00D4AA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40" cy="11" r="3" fill="#4D9FFF"/>
+    </svg>
+    <div>
+      <h1 data-i18n="title">Trend Detective</h1>
+      <small data-i18n="subtitle">Earth System · NASA POWER</small>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <span class="badge" data-i18n="challenge">NASA Space Apps 2026 · Be An Earth System Trend Detective!</span>
+  <div class="ctrl">
+    <div class="seg" id="periodSeg" role="group" aria-label="Window">
+      <button data-p="full" aria-pressed="true">1981–2023</button>
+      <button data-p="2001" aria-pressed="false">2001–2023</button>
+    </div>
+    <select id="region" aria-label="Region"></select>
+    <button class="btn" id="customBtn" data-i18n="custom">Custom box</button>
+    <button class="btn" id="langBtn" aria-label="Language">العربية</button>
+    <a class="btn" href="/about" data-i18n="about">About</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="line">
+      <span class="verdict none" id="verdictPill" role="status" aria-live="polite">·</span>
+      <span class="badge" id="periodBadge">·</span>
+    </div>
+    <h2 id="heroTitle">·</h2>
+    <p id="heroText">·</p>
+    <div class="story" id="story"></div>
+    <div class="meta" id="heroMeta"></div>
+  </section>
+
+  <section class="grid strip" id="scenarios" aria-label="Scenario presets"></section>
+
+  <section class="grid main-grid">
+    <div class="card">
+      <h3 data-i18n="chartTitle">Annual series · robust trend · uncertainty</h3>
+      <div class="tabs" id="varTabs" role="tablist"></div>
+      <div class="chart-wrap"><svg class="chart" id="chart" viewBox="0 0 900 340" role="img"></svg></div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <aside class="card">
+      <h3 data-i18n="gatesTitle">Three gates before any claim</h3>
+      <div id="gates"></div>
+      <div class="meter-label"><span data-i18n="snr">Signal / detection limit</span><span class="num" id="snrVal">·</span></div>
+      <div class="meter"><i id="snrBar" style="width:0%"></i></div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn" id="dlBtn" data-i18n="download">Download results (JSON)</button>
+        <button class="btn" id="reproBtn" data-i18n="repro">Reproduce</button>
+      </div>
+      <div id="reproBox" class="ctx"></div>
+    </aside>
+  </section>
+
+  <section class="grid kpis" id="kpis" style="margin-top:16px"></section>
+
+  <section class="grid two" style="margin-top:16px">
+    <div class="card">
+      <h3 data-i18n="mapTitle">Where it changes · per-cell slope</h3>
+      <div id="map" class="map" role="region" aria-label="Trend map"></div>
+      <div id="mapLegend" class="legend-inline"></div>
+      <div id="mapNote" class="meta" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="tableTitle">Statistical summary</h3>
+      <div style="overflow:auto"><table id="statsTable"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="grid two" style="margin-top:16px">
+    <div class="card">
+      <h3 data-i18n="anomTitle">Detrended anomalies (|z| ≥ 1.5)</h3>
+      <div class="timeline" id="timeline"><div class="axis"></div><div class="tl-ticks" id="tlTicks"></div></div>
+      <div class="meta" id="anomNote"></div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="predTitle">Linear projection (not a climate model)</h3>
+      <div style="overflow:auto"><table id="predTable"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="card method" style="margin-top:16px">
+    <h3 data-i18n="methodTitle">Why a "no verdict" is a result</h3>
+    <ul id="methodList"></ul>
+    <div class="prov" id="prov"></div>
+  </section>
+</main>
+
+<footer>
+  <span data-i18n="footer">Built with NASA POWER (MERRA-2, CERES SYN1deg) · Statistics computed by a portable C++ engine · NASA Space Apps Challenge 2026</span>
+</footer>
+
+<button class="fab" id="fab">🤖 <span data-i18n="fab">Ask about the results</span></button>
+
+<aside class="chat" id="chat" aria-label="Chat">
+  <header>
+    <b data-i18n="chatTitle">Ask the detective</b>
+    <span class="spacer"></span>
+    <button class="btn" id="chatClose" aria-label="Close">✕</button>
+  </header>
+  <div class="msgs" id="msgs"></div>
+  <div class="chips" id="chips"></div>
+  <form id="chatForm">
+    <textarea id="q" placeholder="Ask about the trend…" data-i18n-ph="ask"></textarea>
+    <button class="btn primary" type="submit" data-i18n="send">Send</button>
+  </form>
+</aside>
+
+<script src="/vendor/leaflet/leaflet.js"></script>
+<script src="/map.js?v=4"></script>
+<script src="/app.js?v=4"></script>
+</body>
+</html>

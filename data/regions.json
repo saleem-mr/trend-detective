@@ -1,0 +1,114 @@
+{
+ "sahel": {
+  "key": "sahel",
+  "name": "Western Sahel",
+  "name_ar": "الساحل الغربي",
+  "bbox": [
+   12,
+   18,
+   -16,
+   16
+  ],
+  "points": 45,
+  "effective_cells": 45,
+  "note": "Mauritania / Senegal / Mali core drylands",
+  "tagline": "Albedo falls strongly; rain, soil and temperature sit at the edge of detectability — and the temperature sign depends on the window.",
+  "tagline_ar": "الانعكاس ينخفض بقوة، أما الأمطار والتربة والحرارة فكلها عند حد الكشف — وإشارة الحرارة تتغيّر بتغيّر النافذة الزمنية.",
+  "story_en": "On 2001–2023 this region looks like it is cooling by 0.32 °C per decade. On the full 1981–2023 record it warms by 0.15 °C per decade — same place, same code, opposite sign.",
+  "story_ar": "في 2001–2023 تبدو المنطقة أبرد بمقدار 0.32 °م لكل عقد، وفي السجل الكامل 1981–2023 تظهر احتراراً بمقدار 0.15 °م لكل عقد — نفس المكان ونفس الشيفرة وإشارة معاكسة.",
+  "headline": {
+   "var": "albedo",
+   "slope_per_decade": -0.00267593,
+   "direction": "decreasing",
+   "verdict": "TREND",
+   "confidence": "strong",
+   "snr": 2.17133,
+   "n_trends": 1,
+   "n_variables": 5
+  }
+ },
+ "jordan": {
+  "key": "jordan",
+  "name": "Jordan Badia (Irbid–Mafraq)",
+  "name_ar": "البادية الأردنية",
+  "bbox": [
+   31.5,
+   33,
+   35.5,
+   37
+  ],
+  "points": 16,
+  "effective_cells": 12,
+  "note": "16 sampled points collapse to 12 distinct MERRA-2 cells",
+  "tagline": "Warming is unambiguous here (+0.48 °C/decade). Rainfall is not trending at all.",
+  "tagline_ar": "الاحترار واضح هنا (+0.48 °م لكل عقد)، أما الأمطار فلا تُظهر أي اتجاه.",
+  "story_en": "Warming is unambiguous here (+0.48 °C per decade, 3.2× the detection limit). Rainfall shows no trend at all — and the dashboard says so instead of guessing.",
+  "story_ar": "الاحترار واضح هنا (+0.48 °م لكل عقد، أي 3.2 أضعاف حد الكشف). أما الأمطار فلا تُظهر أي اتجاه — والأداة تقول ذلك بدل التخمين.",
+  "headline": {
+   "var": "temperature",
+   "slope_per_decade": 0.484323,
+   "direction": "increasing",
+   "verdict": "TREND",
+   "confidence": "strong",
+   "snr": 3.1514,
+   "n_trends": 3,
+   "n_variables": 5
+  }
+ },
+ "arctic": {
+  "key": "arctic",
+  "name": "Arctic tundra (Taymyr–Yakutia)",
+  "name_ar": "التندرا القطبية (تايمير–ياكوتيا)",
+  "bbox": [
+   66,
+   72,
+   80,
+   120
+  ],
+  "points": 9,
+  "effective_cells": 9,
+  "note": "high-latitude tundra; very large interannual variability",
+  "tagline": "Warming becomes detectable only when the full 43-year record is used — a 23-year window hides it.",
+  "tagline_ar": "لا يصبح الاحترار قابلاً للكشف إلا باستخدام السجل الكامل (43 سنة) — نافذة 23 سنة تخفيه.",
+  "story_en": "Warming only becomes detectable when the record is extended to 43 years. On 2001–2023 the same data yields no verdict: the record was too short, not the climate quiet.",
+  "story_ar": "لا يصبح الاحترار قابلاً للكشف إلا بتمديد السجل إلى 43 سنة. في 2001–2023 تعطي البيانات نفسها «لا حكم»: لأن السجل قصير، لا لأن المناخ هادئ.",
+  "headline": {
+   "var": "temperature",
+   "slope_per_decade": 0.39594,
+   "direction": "increasing",
+   "verdict": "TREND",
+   "confidence": "moderate",
+   "snr": 1.28307,
+   "n_trends": 2,
+   "n_variables": 5
+  }
+ },
+ "gobi": {
+  "key": "gobi",
+  "name": "Gobi Desert (Mongolia)",
+  "name_ar": "صحراء غوبي (منغوليا)",
+  "bbox": [
+   40,
+   46,
+   95,
+   110
+  ],
+  "points": 9,
+  "effective_cells": 9,
+  "note": "cold desert; continental, high interannual rainfall variance",
+  "tagline": "Warming at the edge of detection (+0.17 °C/decade); precipitation shows no trend.",
+  "tagline_ar": "احترار عند حد الكشف (+0.17 °م لكل عقد)، والأمطار بلا اتجاه.",
+  "story_en": "Warming sits exactly at the detection limit: statistically real, but only 0.9× the smallest trend this record can resolve.",
+  "story_ar": "الاحترار عند حد الكشف تماماً: حقيقي إحصائياً، لكنه 0.9 من أصغر اتجاه يستطيع هذا السجل تمييزه.",
+  "headline": {
+   "var": "temperature",
+   "slope_per_decade": 0.170503,
+   "direction": "increasing",
+   "verdict": "TREND",
+   "confidence": "near-limit",
+   "snr": 0.935213,
+   "n_trends": 2,
+   "n_variables": 5
+  }
+ }
+}
