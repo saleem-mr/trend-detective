@@ -172,6 +172,7 @@ Public link, no password, no registration.
 
 ## 4. Link to Final Project
 Live application: **https://trend.mawqi3k.com/**
+Public code repository: **https://github.com/saleem-mr/trend-detective** (release v1.0.0 includes the demo deck)
 Source archive (full code, data and docs, no login): https://trend.mawqi3k.com/deck/trend-detective-src.tar.gz
 
 ## 5. Detailed Project Description

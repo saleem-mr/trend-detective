@@ -109,6 +109,8 @@ flowchart LR
 
 ## Live
 
+**Source: https://github.com/saleem-mr/trend-detective**
+
 **https://trend.mawqi3k.com/** · host: Hostinger Large (Frankfurt) · nginx with Let's Encrypt TLS (HTTP/2, HSTS)
 
 ## Run locally
@@ -216,7 +218,7 @@ In line with the NASA Space Apps SI rules, and to acknowledge AI-assisted code a
 ## License
 
 MIT — see [LICENSE](LICENSE). Third-party notices (Leaflet BSD-2, NASA data attribution, OFL fonts) are in
-the same file.
+[NOTICE.md](NOTICE.md).
 
 ## Team
 
