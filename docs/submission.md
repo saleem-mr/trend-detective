@@ -196,18 +196,21 @@ asserted. It is bilingual (English/Arabic with full RTL) for the local event in 
 (vendored, BSD-2), Docker, nginx with Let's Encrypt TLS, NASA POWER/MERRA-2/CERES and NASA GIBS.
 
 ## 6. Use of Super Intelligence (SI)
-Yes — disclosed in full. **(a) Development:** the code was written by a human team lead pair-programming
-with an agentic AI coding assistant (opencode CLI driving a DeepSeek model). The assistant wrote most of
-the C++ statistics engine, the server and the front end under the lead's direction; the lead chose the
-challenge, defined the concept and gate logic, and validated every result. No SI tool chose the idea or
-the scientific method; the assistant was used as tooling, in the same way as a compiler or an IDE.
-**(b) In the product:** the chat panel uses a large language model that is strictly grounded — it
-receives only the pre-computed results JSON, never raw data, and is instructed to answer "this analysis
-does not cover that question" otherwise. If no model key is configured, a deterministic template
-interpreter answers instead. **(c) Content:** no SI-generated images or video are used in this
-submission; every screenshot is a capture of the running application and the slide deck is generated
-from code by a script. **(d)** No NASA branding, logos or mission identifiers are used in any generated
-content.
+Yes — used as tooling, not as the source of the idea.
+
+**What the team owned:** the challenge selection; the concept of a detector that refuses to report trends
+it cannot support; the standard the project had to meet (report a change only when it is detectable, and
+publish the detection limit); acceptance or rejection of every method against that standard; region and
+variable selection; and all validation decisions, including two corrections we made to our own published
+numbers.
+
+**Where SI was used:** implementation. AI coding assistants generated substantial parts of the C++
+statistics engine, the Node server and the front end under our direction, and we reviewed, tested and
+corrected it. The optional in-app chat uses an LLM strictly grounded on the pre-computed results JSON —
+never raw data — with a deterministic fallback when no key is configured.
+
+**Where SI was not used:** no SI-generated imagery or video; no NASA branding, logos or mission
+identifiers; the demo deck is produced from our own results by a script.
 
 ## 7. NASA Data
 - **NASA POWER** (power.larc.nasa.gov) — 79 monthly point series, 1981–2023: `TS` (MERRA-2 Earth skin

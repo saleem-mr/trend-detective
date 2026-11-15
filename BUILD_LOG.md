@@ -171,7 +171,7 @@ different regime; quoting it here would have been dishonest.
 Action: the default build is now `g++ -O3 -std=c++17` (baseline x86-64). This also removes a real
 deployment hazard: `-march=native` inside a Docker build targets the *build* host, and an AVX-512
 binary dies with SIGILL on any server without it. Every mention of "AVX-512" in the UI, README, slides
-and the report to the briefing AI was corrected.
+and the internal build brief was corrected.
 
 ## Phase 15 — Design audit and fixes
 Reported: the verdict badge looked wrong. Root causes found by measuring, not by eye:

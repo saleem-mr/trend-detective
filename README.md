@@ -199,21 +199,27 @@ and `/api/health` reports the active order.
 > never printed by the server.
 
 
-## Use of Super Intelligence (SI) — required disclosure
+## Use of Super Intelligence (SI)
 
-In line with the NASA Space Apps SI rules, and to acknowledge AI-assisted code as required for
-"code and data":
+Disclosed as required by the NASA Space Apps SI rules (generated code must be acknowledged in descriptive
+text and metadata).
 
-- **Code:** written by the team lead pair-programming with an agentic AI coding assistant (opencode CLI
-  driving a DeepSeek model). The assistant produced most of the C++ engine, the Node server and the front
-  end under the lead's direction; the lead chose the challenge, defined the concept and the gate logic,
-  and validated every number. **All source files in this repository are SI-assisted code.**
-- **Runtime:** the optional chat panel sends the pre-computed results JSON to a large language model
-  (DeepSeek via TokenHarbor). It never receives raw data. With no key configured, a deterministic
-  rule-based interpreter answers instead — verified in both English and Arabic.
-- **No SI-generated imagery or video** is used. Screenshots are captures of the running application; the
-  slide deck is produced by `docs/slides/build_deck.py`.
-- **No NASA branding or design elements** are used in any generated content.
+**Team ownership.** The challenge selection; the concept of a detector that reports a trend only when the
+data can support it; the standard every method had to meet (significance *and* a published detection
+limit); the region and variable selection; and all validation decisions — including two corrections we made
+to our own published numbers — are the team's.
+
+**Implementation.** AI coding assistants were used as tooling to write and refactor substantial parts of
+the C++ engine, the Node server and the front end under the team's direction. Every result was reviewed,
+tested and corrected by the team (`npm test`, `./engine/trend-detect --selftest`).
+
+**In the product.** The optional chat panel uses a large language model strictly grounded on the
+pre-computed results JSON — it never receives raw data — and falls back to a deterministic interpreter when
+no key is configured (verified in English and Arabic).
+
+**Not SI-generated.** No generated imagery or video is used: screenshots are captures of the running
+application and the demo deck is produced from our results by `docs/slides/build_deck.py`. No NASA branding
+or mission identifiers are used.
 
 ## License
 
